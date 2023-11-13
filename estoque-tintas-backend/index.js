@@ -8,9 +8,10 @@ const usuarioRouter = require("./Routes/usuario");
 const produtoRouter = require("./Routes/produto");
 const fornecedorRouter = require("./Routes/fornecedor");
 const depositoRouter = require("./Routes/deposito");
+const estoqueRouter = require("./Routes/estoque");
 
 app.use(bodyParser.urlencoded({extended: false}));
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 // Database Connection
 connection
@@ -24,7 +25,6 @@ connection
 
 app.use(cors());
 
-
 app.use('/', usuarioRouter);
 
 app.use('/', produtoRouter);
@@ -32,6 +32,8 @@ app.use('/', produtoRouter);
 app.use('/', fornecedorRouter);
 
 app.use('/', depositoRouter);
+
+app.use('/', estoqueRouter);
     
 http.listen(3000, () => {
     console.log("App rodando!");
