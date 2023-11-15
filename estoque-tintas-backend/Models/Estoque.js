@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const connection = require("./database");
+const Deposito = require("./Deposito");
 
 const EstoqueORM = connection.define("ESTOQUE", {
     idSaldo: {
@@ -196,6 +197,11 @@ class Estoque {
 
                 const quantidadeAnterior = estoque[0].dataValues.quantidade;
 
+                console.log("Movimentando produto: " + idSaldo[i]);
+                console.log("Quantidade: " + quantidade[i]);
+                console.log("Para Depósito: " + idDeposito);
+
+
                 await EstoqueORM.update({ 
                     quantidade: parseInt(quantidadeAnterior) - parseInt(quantidade[i]) }, {
                     where: {
@@ -224,6 +230,11 @@ class Estoque {
                         idDeposito
                     }
                 });
+
+                
+                console.log("Movimentando produto: " + idSaldo[i]);
+                console.log("Quantidade: " + quantidade[i]);
+                console.log("Para Depósito: " + idDeposito);
         
                 if(Object.keys(estoque).length == 0) {
                     await EstoqueORM.create({
@@ -244,7 +255,7 @@ class Estoque {
                     });
                 } else {
                     await EstoqueORM.update({
-                        quantidade: parseInt(estoque[0].dataValues.quantidade) + parseInt(quantidade) }, {
+                        quantidade: parseInt(estoque[0].dataValues.quantidade) + parseInt(quantidade[i]) }, {
                         where: {
                             idSaldo: estoque[0].dataValues.idSaldo
                         }
